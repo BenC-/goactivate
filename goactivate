@@ -1,13 +1,13 @@
-#!/bin/bash
+#!/bin/zsh
 
 usage () {
-    echo "Don't run this script directly, instead type 'source goactivate'.
+    echo "Don't run this script directly, instead type '. goactivate'.
 
 Script to set PATH, GOPATH and shell prompt for your project. Drop this script
 in your PATH. To activate environment, go in the root directory of the project
 and type:
 
-  source goactivate
+  . goactivate
 
 This will set PATH to:
 
@@ -28,7 +28,7 @@ To deactivate the environment, type:
 This will restore your previous PATH, GOPATH and shell prompt."
 }
 
-[[ $_ == $0 ]] && usage
+[[ $ZSH_EVAL_CONTEXT == :file$ ]] && usage
 
 deactivate () {
     # reset old environment variables
@@ -41,13 +41,6 @@ deactivate () {
         GOPATH="$_OLD_VIRTUAL_GOPATH"
         export GOPATH
         unset _OLD_VIRTUAL_GOPATH
-    fi
-
-    # This should detect bash and zsh, which have a hash command that must
-    # be called to get it to forget past commands.  Without forgetting
-    # past commands the $PATH changes we made may not be respected
-    if [ -n "$BASH" -o -n "$ZSH_VERSION" ] ; then
-        hash -r 2>/dev/null
     fi
 
     if [ -n "$_OLD_VIRTUAL_PS1" ] ; then
@@ -85,17 +78,10 @@ if [ -z "$VIRTUAL_ENV_DISABLE_PROMPT" ] ; then
     if [ "`basename \"$VIRTUAL_ENV\"`" = "__" ] ; then
         # special case for Aspen magic directories
         # see http://www.zetadev.com/software/aspen/
-        PS1="[`basename \`dirname \"$VIRTUAL_ENV\"\``] $PS1"
+        PS1="[GoProject:`basename \`dirname \"$VIRTUAL_ENV\"\``] $PS1"
     else
-        PS1="[`basename \"$VIRTUAL_ENV\"`]$PS1"
+        PS1="[GoProject:`basename \"$VIRTUAL_ENV\"`]$PS1"
     fi
     fi
     export PS1
-fi
-
-# This should detect bash and zsh, which have a hash command that must
-# be called to get it to forget past commands.  Without forgetting
-# past commands the $PATH changes we made may not be respected
-if [ -n "$BASH" -o -n "$ZSH_VERSION" ] ; then
-    hash -r 2>/dev/null
 fi
