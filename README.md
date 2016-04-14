@@ -10,7 +10,7 @@ Usage
 Drop this script in your *PATH*. To activate environment, go in the root directory of the project and type:
 
 ```shell
-. goactivate
+source goactivate
 ```
 
 This will set *PATH* to:
